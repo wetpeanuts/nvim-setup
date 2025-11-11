@@ -7,7 +7,13 @@ function M.try_load_project_setup()
   
   if uv.fs_stat(project_nvim_config) then
     vim.notify("Project setup found")
-    dofile(project_nvim_config)
+    local config = dofile(project_nvim_config)
+    if not config.PROJECT_TYPE then
+      vim.notify("Project type not specified")
+      return
+    end
+    local project_setup = require("project_utils." .. config.PROJECT_TYPE)
+    project_setup.init(config)
   end
 end
 

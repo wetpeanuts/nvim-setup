@@ -1,7 +1,7 @@
-local project_setup = require('utils.project_setup')
+local load_project_setup = require('project_utils.load_setup')
 
 -- Try load project specific setup from .nvim/setup.lua
-project_setup.try_load_project_setup()
+load_project_setup.try_load_project_setup()
 
 -- Bootstrap lazy.nvim if not installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -59,8 +59,6 @@ require("lazy").setup({
     lazy = false, -- neo-tree will lazily load itself
   },
 })
-
-vim.lsp.enable({'clangd'})
 
 -- Enable syntax highlighting and filetype
 vim.cmd('syntax enable')
