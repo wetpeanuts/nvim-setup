@@ -1,5 +1,7 @@
 # My custom nvim setup
 
+***[UNDER CONSTRUCTION]***
+
 ### Project structure
 ```
 root
