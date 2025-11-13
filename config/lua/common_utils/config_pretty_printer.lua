@@ -13,7 +13,7 @@ function M.print_config(config)
   -- Build and show formatted lines
   for key, value in pairs(config) do
     if key ~= "PROJECT_TYPE" then
-      local padded_key = key .. string.rep(" ", max_key_len - #key)
+      local padded_key = string.rep(" ", max_key_len - #key) .. key 
       vim.notify(padded_key .. " : " .. value)
     end
   end

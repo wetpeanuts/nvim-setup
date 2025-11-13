@@ -1,7 +1,9 @@
-local load_project_setup = require('project_utils.load_setup')
+-- Set space as leader key
+vim.g.mapleader = ' '
 
 -- Try load project specific setup from .nvim/setup.lua
-load_project_setup.try_load_project_setup()
+local load_project_setup = require('project_utils.load_setup')
+local welcome_config = load_project_setup.try_load_project_setup()
 
 -- Bootstrap lazy.nvim if not installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -27,9 +29,6 @@ vim.o.cursorline = true         -- Highlight current line
 vim.o.termguicolors = true      -- Enable true color support
 
 vim.opt.clipboard = "unnamedplus" -- Use system clipboard for all yank/paste/change
-
--- Leader key
-vim.g.mapleader = ' '           -- Space as leader key
 
 -- Initialize lazy.nvim plugin manager with plugins
 require("lazy").setup({
@@ -64,29 +63,13 @@ require("lazy").setup({
 vim.cmd('syntax enable')
 vim.cmd('filetype plugin indent on')
 
--- Hotkeys
--- Directory tree view
-vim.keymap.set("n", "<leader>t", ":Neotree toggle<CR>", { noremap = true, silent = true })
+-- Init custom keymap
+local default_bindings = require("common_utils.default_bindings")
 
--- Window navigation with <leader>w[direction]
-vim.keymap.set('n', '<leader>wj', '<C-w>j', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>wk', '<C-w>k', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>wh', '<C-w>h', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>wl', '<C-w>l', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>ww', '<C-w><C-w>', { noremap = true, silent = true })
+default_bindings.init()
+default_bindings.populate_config(welcome_config)
 
--- Window splits with <leader>s[direction]
-vim.keymap.set('n', '<leader>sh', '<C-w>s', { noremap = true, silent = true }) -- horizontal split
-vim.keymap.set('n', '<leader>sv', '<C-w>v', { noremap = true, silent = true }) -- vertical split
-
-vim.keymap.set('n', '<leader>nt', ':tabnew<CR>', { noremap = true, silent = true })
-
--- Show LSP error
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Show full LSP error message" })
-
--- Go to definition
-vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
-
--- Make 'd' delete without saving (blackhole register)
-vim.keymap.set('n', 'd', '"_d', { noremap = true, silent = true })
+-- Init welcome floating window
+local welcome = require("common_utils.welcome")
+welcome.init_welcome_win(welcome_config)
 
