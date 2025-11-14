@@ -73,3 +73,6 @@ default_bindings.populate_config(welcome_config)
 local welcome = require("common_utils.welcome")
 welcome.init_welcome_win(welcome_config)
 
+local opened_files = require("project_utils.opened_files")
+opened_files.init()
+
