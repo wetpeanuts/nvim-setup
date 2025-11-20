@@ -1,7 +1,7 @@
 local M = {}
 
 local function bind_term_cmd(binding, cmd)
-  vim.notify('Binding ' .. binding .. ' to "' .. cmd .. '"')
+  -- vim.notify('Binding ' .. binding .. ' to "' .. cmd .. '"')
   -- vim.keymap.set('n', binding, '', {
   --   noremap = true,
   --   silent = true,

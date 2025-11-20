@@ -28,6 +28,9 @@ vim.o.wrap = false              -- Disable line wrap
 vim.o.cursorline = true         -- Highlight current line
 vim.o.termguicolors = true      -- Enable true color support
 
+vim.o.completeopt = "menu,menuone,noselect"
+
+vim.opt.shortmess:append("I")     -- Disable the intro message
 vim.opt.clipboard = "unnamedplus" -- Use system clipboard for all yank/paste/change
 
 -- Initialize lazy.nvim plugin manager with plugins
@@ -57,6 +60,54 @@ require("lazy").setup({
     },
     lazy = false, -- neo-tree will lazily load itself
   },
+  {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "saadparwaiz1/cmp_luasnip",
+      "L3MON4D3/LuaSnip",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+    },
+    config = function()
+      local cmp = require("cmp")
+      local luasnip = require("luasnip")
+
+      -- Load friendly-snippets or your snippet collection
+      require("luasnip.loaders.from_vscode").lazy_load()
+
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<C-k>"] = cmp.mapping.select_prev_item(),
+          ["<C-j>"] = cmp.mapping.select_next_item(),
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-c>"] = cmp.mapping.complete(),
+          ["<C-a>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        }),
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = 'nvim_lua' },
+          { name = "luasnip" },
+          { name = "buffer" },
+          { name = "path" },
+        }),
+        completion = {
+          autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged }
+        },
+        experimental = {
+          ghost_text = true,  -- Show preview of completion inline (optional)
+        },
+      })
+    end,
+  },
 })
 
 -- Enable syntax highlighting and filetype
@@ -76,3 +127,7 @@ welcome.init_welcome_win(welcome_config)
 local opened_files = require("project_utils.opened_files")
 opened_files.init()
 
+-- local lua_ls_config = require('lsp.lua_ls')  -- adjust path accordingly
+-- 
+-- vim.lsp.config('lua_ls', lua_ls_config)
+vim.lsp.enable({'lua_ls'})

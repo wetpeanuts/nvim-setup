@@ -1,4 +1,3 @@
-
 local M = {}
 
 local win = nil
@@ -18,13 +17,13 @@ function M.init_welcome_win(data)
   local row = math.floor((vim.o.lines - height) / 2 - 1)
 
   buf = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_option(buf, 'modifiable', true)
+  vim.bo[buf].modifiable = true
 
   local lines = {}
-  local function center_text(text)
-    local pad = math.floor((width - #text) / 2)
-    return string.rep(' ', pad) .. text
-  end
+  -- local function center_text(text)
+  --   local pad = math.floor((width - #text) / 2)
+  --   return string.rep(' ', pad) .. text
+  -- end
 
   -- table.insert(lines, center_text(data.project_name))
   -- table.insert(lines, center_text(data.project_type))
@@ -33,7 +32,7 @@ function M.init_welcome_win(data)
   table.insert(lines, 'ROOT: ' .. data.project_root .. string.rep(' ', width - #data.project_root - 6))
   table.insert(lines, string.rep('_', width))
   table.insert(lines, string.rep(' ', width))
-  
+
   for _, binding in ipairs(data.custom_bindings) do
     local desc = binding.description
     local bind = binding.binding
@@ -58,10 +57,10 @@ function M.init_welcome_win(data)
   end
 
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-  vim.api.nvim_buf_set_option(buf, 'modifiable', false)
-  vim.api.nvim_buf_set_option(buf, 'bufhidden', 'hide')
-  vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
-  vim.api.nvim_buf_set_option(buf, 'filetype', 'welcome')
+  vim.bo[buf].modifiable = false
+  vim.bo[buf].bufhidden = 'hide'
+  vim.bo[buf].buftype = 'nofile'
+  vim.bo[buf].filetype = 'welcome'
 
   local opts = {
     style = "minimal",
@@ -73,10 +72,14 @@ function M.init_welcome_win(data)
     border = "rounded",
   }
 
+  -- Create welcome window
   win = vim.api.nvim_open_win(buf, true, opts)
   is_open = true
 
-  -- Keymap for toggle
+  -- Close it if nvim opened a file
+  if vim.fn.argc() ~= 0 then
+    M.toggle_welcome()
+  end
 end
 
 function M.toggle_welcome()

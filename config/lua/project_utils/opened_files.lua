@@ -11,7 +11,7 @@ function M.init()
   end
 
   local config_path = nvim_proj_dir .. "/opened_files.json"
-    
+
   local function dump_config()
     local config_file = io.open(config_path, "w")
     if config_file then
@@ -24,7 +24,7 @@ function M.init()
     local config_file = io.open(config_path, "r")
     if config_file then
       local config_data = config_file:read("*all")
-      vim.notify("Read config: " .. config_data)
+      -- vim.notify("Read config: " .. config_data)
       config = vim.fn.json_decode(config_data)
     end
   end
@@ -35,7 +35,7 @@ function M.init()
   else
     load_config()
   end
-  
+
   vim.api.nvim_create_autocmd("BufRead", {
     callback = function(args)
       local filepath = vim.api.nvim_buf_get_name(args.buf)
