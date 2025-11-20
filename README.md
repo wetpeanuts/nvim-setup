@@ -9,6 +9,12 @@ root
  `- project_setup // A collection of default project setups
 ```
 
+### Configuration
+
+1. Directory tree view (neo-tree plugin)
+2. LSP support for cpp, lua (more to go)
+3. Custom project setups (see the [use guide](#how-to-use))
+
 ### How to use
 
 1. Clone repo
