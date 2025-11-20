@@ -1,12 +1,11 @@
-local build_dir = os.getenv("NVIM_CPP_BUILD_DIR") or "build"
-local cpp_standard = os.getenv("NVIM_CPP_STANDARD") or "-std=c++23"
+local config = vim.g.cpp_config
 
 return {
-  cmd = { "clangd", "--compile-commands-dir=" .. build_dir, "--background-index", "--clang-tidy", "--header-insertion=iwyu" },
+  cmd = { "clangd", "--compile-commands-dir=" .. config.CPP_BUILD_DIR, "--background-index", "--clang-tidy", "--header-insertion=iwyu" },
   filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" },
   root_markers = { ".git", "compile_commands.json", "compile_flags.txt", },
   capabilities = vim.lsp.protocol.make_client_capabilities(),
   init_options = {
-    fallbackFlags = { cpp_standard },
+    fallbackFlags = { config.CPP_STANDARD },
   },
 }

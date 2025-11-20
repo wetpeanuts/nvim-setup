@@ -59,6 +59,13 @@ require("lazy").setup({
       "nvim-tree/nvim-web-devicons", -- optional, but recommended
     },
     lazy = false, -- neo-tree will lazily load itself
+    opts = {
+      filesystem = {
+        filtered_items = {
+          visible = true,
+        },
+      },
+    },
   },
   {
     "hrsh7th/nvim-cmp",

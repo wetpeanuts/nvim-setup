@@ -10,7 +10,7 @@ local function bind_term_cmd(binding, cmd)
   --     vim.cmd('terminal ' .. cmd)
   --   end
   -- })
-  
+
   vim.keymap.set('n', binding,
     ':belowright 10split | terminal ' .. cmd .. '<CR>',
     { noremap = true, silent = true }
@@ -18,8 +18,9 @@ local function bind_term_cmd(binding, cmd)
 end
 
 function M.init(config)
+  vim.g.cpp_config = config
   vim.lsp.enable({'clangd'})
-  
+
   -- Init project specific keymap
   bind_term_cmd('<leader>cc', config.CPP_CONFIG_CMD)
   bind_term_cmd('<leader>cb', config.CPP_BUILD_CMD)
