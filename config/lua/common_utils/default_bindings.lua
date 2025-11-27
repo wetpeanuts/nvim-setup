@@ -3,7 +3,8 @@ local M = {}
 function M.init()
   -- Hotkeys
   -- Directory tree view
-  vim.keymap.set("n", "<leader>t", ":Neotree toggle<CR>", { noremap = true, silent = true })
+  vim.keymap.set("n", "<leader>t", ":Neotree toggle source=filesystem<CR>", { noremap = true, silent = true })
+  vim.keymap.set("n", "<leader>o", ":Neotree toggle source=buffers<CR>", { noremap = true, silent = true })
 
   -- Window navigation with <leader>w[direction]
   vim.keymap.set('n', '<leader>wj', '<C-w>j', { noremap = true, silent = true })
@@ -27,6 +28,15 @@ function M.init()
   vim.keymap.set({'n', 'x'}, 'd', '"_d', { noremap = true, silent = true })
 
   vim.keymap.set('n', '<leader>h', "<cmd>lua require('common_utils.welcome').toggle_welcome()<CR>", { noremap = true, silent = true })
+
+  -- load the session for the current directory
+  vim.keymap.set("n", "<leader>qs", function() require("persistence").load() end)
+  -- select a session to load
+  vim.keymap.set("n", "<leader>qS", function() require("persistence").select() end)
+  -- load the last session
+  vim.keymap.set("n", "<leader>ql", function() require("persistence").load({ last = true }) end)
+  -- stop Persistence => session won't be saved on exit
+  vim.keymap.set("n", "<leader>qd", function() require("persistence").stop() end)
 end
 
 function M.populate_config(config)

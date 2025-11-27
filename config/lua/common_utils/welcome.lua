@@ -77,9 +77,9 @@ function M.init_welcome_win(data)
   is_open = true
 
   -- Close it if nvim opened a file
-  if vim.fn.argc() ~= 0 then
-    M.toggle_welcome()
-  end
+  -- if vim.fn.argc() ~= 0 then  
+  M.toggle_welcome()
+  -- end
 end
 
 function M.toggle_welcome()

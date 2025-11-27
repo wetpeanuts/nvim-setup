@@ -33,6 +33,8 @@ vim.o.completeopt = "menu,menuone,noselect"
 vim.opt.shortmess:append("I")     -- Disable the intro message
 vim.opt.clipboard = "unnamedplus" -- Use system clipboard for all yank/paste/change
 
+-- vim.opt.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,terminal"
+
 -- Initialize lazy.nvim plugin manager with plugins
 require("lazy").setup({
   -- Utility plugins
@@ -115,6 +117,12 @@ require("lazy").setup({
       })
     end,
   },
+  -- {
+  --   "folke/persistence.nvim",
+  --   event = "BufReadPre", -- this will only start session saving when an actual file was opened
+  --   opts = {
+  --   }
+  -- },
 })
 
 -- Enable syntax highlighting and filetype
@@ -134,7 +142,4 @@ welcome.init_welcome_win(welcome_config)
 local opened_files = require("project_utils.opened_files")
 opened_files.init()
 
--- local lua_ls_config = require('lsp.lua_ls')  -- adjust path accordingly
--- 
--- vim.lsp.config('lua_ls', lua_ls_config)
 vim.lsp.enable({'lua_ls'})
