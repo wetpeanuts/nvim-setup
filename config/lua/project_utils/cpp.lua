@@ -51,7 +51,7 @@ end
 
 function M.init(config)
   vim.g.cpp_config = config
-  vim.lsp.enable({'clangd'})
+  vim.lsp.enable({'clangd', 'cmake_ls'})
 
   -- Init project specific keymap
   bind_term_cmd('<leader>cc', config.CPP_CONFIG_CMD)
