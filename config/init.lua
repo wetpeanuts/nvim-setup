@@ -67,6 +67,11 @@ require("lazy").setup({
           visible = true,
         },
       },
+      buffers = {
+        show_unloaded = true,  -- key fix for session-restored buffers
+        follow_current_file = { enabled = true },
+        bind_to_cwd = false,
+      },
     },
   },
   {
@@ -117,12 +122,19 @@ require("lazy").setup({
       })
     end,
   },
-  -- {
-  --   "folke/persistence.nvim",
-  --   event = "BufReadPre", -- this will only start session saving when an actual file was opened
-  --   opts = {
-  --   }
-  -- },
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {
+      -- post_restore_cmds = {
+      --   function()
+      --     local manager = require("neo-tree.sources.manager")
+      --     local state = manager.get_state("buffers")
+      --     require("neo-tree.sources.buffers.commands").refresh(state)
+      --   end
+      -- }
+    }
+  },
 })
 
 -- Enable syntax highlighting and filetype
@@ -136,10 +148,10 @@ default_bindings.init()
 default_bindings.populate_config(welcome_config)
 
 -- Init welcome floating window
-local welcome = require("common_utils.welcome")
-welcome.init_welcome_win(welcome_config)
-
-local opened_files = require("project_utils.opened_files")
-opened_files.init()
+-- local welcome = require("common_utils.welcome")
+-- welcome.init_welcome_win(welcome_config)
+-- 
+-- local opened_files = require("project_utils.opened_files")
+-- opened_files.init()
 
 vim.lsp.enable({'lua_ls'})
