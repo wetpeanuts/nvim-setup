@@ -23,11 +23,10 @@ function M.init()
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Show full LSP error message" })
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, {desc = "Show hover in floating window"})
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to definition" })
+  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol under cursor" })
 
   -- Make 'd' delete without saving (blackhole register)
   vim.keymap.set({'n', 'x'}, 'd', '"_d', { noremap = true, silent = true })
-
-  vim.keymap.set('n', '<leader>h', "<cmd>lua require('common_utils.welcome').toggle_welcome()<CR>", { noremap = true, silent = true })
 
   -- load the session for the current directory
   vim.keymap.set("n", "<leader>qs", function() require("persistence").load() end)
@@ -37,13 +36,11 @@ function M.init()
   vim.keymap.set("n", "<leader>ql", function() require("persistence").load({ last = true }) end)
   -- stop Persistence => session won't be saved on exit
   vim.keymap.set("n", "<leader>qd", function() require("persistence").stop() end)
-end
 
-function M.populate_config(config)
-  config.default_bindings = {
-    { icon = "", description = "Show/hide directory explorer", binding = "_t" },
-    { icon = "󰋖", description = "Show/hide this help message", binding = "_h" },
-  }
+  vim.keymap.set("n", "<C-j>", ":m .+1<CR>==", { silent = true, desc = "Move line down" })
+  vim.keymap.set("n", "<C-k>", ":m .-2<CR>==", { silent = true, desc = "Move line up" })
+  vim.keymap.set("v", "<C-j>", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move block down" })
+  vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move block up" })
 end
 
 return M

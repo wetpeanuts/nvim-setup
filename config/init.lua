@@ -1,10 +1,6 @@
 -- Set space as leader key
 vim.g.mapleader = ' '
 
--- Try load project specific setup from .nvim/setup.lua
-local load_project_setup = require('project_utils.load_setup')
-local welcome_config = load_project_setup.try_load_project_setup()
-
 -- Bootstrap lazy.nvim if not installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -135,6 +131,123 @@ require("lazy").setup({
       -- }
     }
   },
+  {
+    "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
+    config = function()
+      local telescope = require("telescope")
+      local actions = require("telescope.actions")
+
+      telescope.setup({
+        defaults = {
+          path_display = { "truncate" },
+          layout_strategy = "flex",
+          mappings = {
+            i = {
+              ["<C-k>"] = actions.move_selection_previous,
+              ["<C-j>"] = actions.move_selection_next,
+              ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+            },
+          },
+        },
+        pickers = {
+          find_files = {
+            hidden = true,
+          },
+        },
+      })
+
+      -- Load fzf extension for better performance
+      telescope.load_extension("fzf")
+
+      -- Keymaps
+      local builtin = require("telescope.builtin")
+      vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
+      vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
+      vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
+      vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
+    end,
+  },
+  {
+    "goolord/alpha-nvim",
+    event = "VimEnter",
+    dependencies = { "nvim-tree/nvim-web-devicons", "folke/persistence.nvim" },
+    config = function()
+      local alpha = require("alpha")
+      local dashboard = require("alpha.themes.dashboard")
+      local persistence = require("persistence")
+
+      -- Header (customize as needed)
+      dashboard.section.header.val = {
+        " ███╗   ██╗ ███████╗ ██████╗ ██╗   ██╗ ██╗ ███╗   ███╗ ",
+        " ████╗  ██║ ██╔════╝██╔═══██╗██║   ██║ ██║ ████╗ ████║ ",
+        " ██╔██╗ ██║ █████╗  ██║   ██║██║   ██║ ██║ ██╔████╔██║ ",
+        " ██║╚██╗██║ ██╔══╝  ██║   ██║╚██╗ ██╔╝ ██║ ██║╚██╔╝██║ ",
+        " ██║ ╚████║ ███████╗╚██████╔╝ ╚████╔╝  ██║ ██║ ╚═╝ ██║ ",
+        " ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝   ╚═══╝   ╚═╝ ╚═╝     ╚═╝ ",
+      }
+
+      -- Buttons
+      dashboard.section.buttons.val = {
+        dashboard.button("f", "󰈞  Find file", ":Telescope find_files <CR>"),
+        dashboard.button("n", "  New file", ":ene <BAR> startinsert <CR>"),
+        dashboard.button("r", "󰈗  Recent files", ":Telescope oldfiles <CR>"),
+        dashboard.button("s", "  Restore session", function()
+          persistence.load()
+        end),
+        dashboard.button("p", "  Find session", function ()
+          persistence.select()
+        end),
+        dashboard.button("q", "󰅚  Quit", ":qa<CR>"),
+      }
+
+      dashboard.section.footer.val = function()
+        local cwd = vim.fn.getcwd()
+        local truncated = vim.fn.fnamemodify(cwd, ":~")  -- Show relative to home (~)
+        return "CWD: " .. truncated .. " | Loaded " .. vim.fn.len(vim.fn.globpath(vim.fn.stdpath("data") .. "/lazy", "*", 0, 1)) .. " plugins"
+      end
+
+      dashboard.section.footer.opts.hl = "Type"
+
+      -- Styling
+      dashboard.section.header.opts.hl = "Include"
+      dashboard.section.buttons.opts.hl = "Keyword"
+      dashboard.section.buttons.opts.hl_shortcut = "Comment"
+
+      dashboard.opts.opts.noautocmd = true
+      dashboard.opts.opts.margin = 5
+      dashboard.opts.opts.padding = 1
+
+      -- Auto-restore session on startup (but show alpha first)
+      persistence.setup({
+        dir = vim.fn.stdpath("state") .. "/sessions/",
+        autosave_silent = true,
+      })
+
+      -- Disable alpha when session is restored
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "PersistenceSavedSession",
+        callback = function()
+          require("alpha").close()
+        end,
+      })
+
+      alpha.setup(dashboard.opts)
+
+      -- Disable folding in alpha buffer
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "alpha",
+        callback = function()
+          vim.b.current_foldlevel = 999
+          vim.opt_local.foldenable = false
+        end,
+      })
+    end,
+  },
 })
 
 -- Enable syntax highlighting and filetype
@@ -145,13 +258,6 @@ vim.cmd('filetype plugin indent on')
 local default_bindings = require("common_utils.default_bindings")
 
 default_bindings.init()
-default_bindings.populate_config(welcome_config)
-
--- Init welcome floating window
--- local welcome = require("common_utils.welcome")
--- welcome.init_welcome_win(welcome_config)
--- 
--- local opened_files = require("project_utils.opened_files")
--- opened_files.init()
 
 vim.lsp.enable({'lua_ls'})
+vim.lsp.enable({'clangd', 'cmake_ls'})
