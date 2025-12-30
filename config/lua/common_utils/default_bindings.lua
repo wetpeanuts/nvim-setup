@@ -19,6 +19,8 @@ function M.init()
 
   vim.keymap.set('n', '<leader>nt', ':tabnew<CR>', { noremap = true, silent = true })
 
+  vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
+
   -- LSP
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Show full LSP error message" })
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, {desc = "Show hover in floating window"})
@@ -41,6 +43,14 @@ function M.init()
   vim.keymap.set("n", "<C-k>", ":m .-2<CR>==", { silent = true, desc = "Move line up" })
   vim.keymap.set("v", "<C-j>", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move block down" })
   vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move block up" })
+
+  vim.keymap.set('n', '<leader>fg', ":Telescope live_grep<CR>", { desc = 'Live Grep' })
+  vim.keymap.set('n', '<leader>fw', ":Telescope grep_string<CR>", { desc = 'Grep Word' })
+  vim.keymap.set('n', '<leader>ff', ':Telescope find_files<CR>', { desc = 'Find Files' })
+  -- vim.keymap.set('n', '<leader>rr', function()
+  --   local new_str = vim.fn.input('Replace with: ')
+  --   vim.cmd('cfdo %s/\\%V/' .. vim.fn.escape(new_str, '/') .. '/g | update')
+  -- end, { desc = 'Replace in Quickfix' })
 end
 
 return M
