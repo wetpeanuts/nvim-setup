@@ -256,8 +256,11 @@ vim.cmd('filetype plugin indent on')
 
 -- Init custom keymap
 local default_bindings = require("common_utils.default_bindings")
-
 default_bindings.init()
+
+local env_utils = require("common_utils.env")
+env_utils.init()
 
 vim.lsp.enable({'lua_ls'})
 vim.lsp.enable({'clangd', 'cmake_ls'})
+vim.lsp.enable({'rust_analyzer'})
