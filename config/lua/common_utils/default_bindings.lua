@@ -51,6 +51,8 @@ function M.init()
   --   local new_str = vim.fn.input('Replace with: ')
   --   vim.cmd('cfdo %s/\\%V/' .. vim.fn.escape(new_str, '/') .. '/g | update')
   -- end, { desc = 'Replace in Quickfix' })
+
+  vim.keymap.set('n', '<leader>ch', ':nohl<CR>', { silent = true, desc = 'Clear search highlights' })
 end
 
 return M

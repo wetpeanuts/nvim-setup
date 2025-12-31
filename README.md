@@ -1,19 +1,40 @@
 # My custom nvim setup
 
-***[UNDER CONSTRUCTION]***
-
 ### Project structure
 ```
 root
-|`- config        // Global nvim config 
- `- project_setup // A collection of default project setups
+ `- config // Global nvim config 
 ```
 
-### Configuration
+### LSP support
 
-1. Directory tree view (neo-tree plugin)
-2. LSP support for cpp, lua (more to go)
-3. Custom project setups (see the [use guide](#how-to-use))
+1. cpp
+2. cmake
+3. lua
+4. rust
+
+### Enabled plugins
+
+| Plugin                          | Description                                    |
+|---------------------------------|------------------------------------------------|
+| `goolord/alpha-nvim`            | Welcome dashboard                              |
+| `catppuccin/nvim`               | Color scheme                                   |
+| `nvim-lualine/lualine.nvim`     | Status bar                                     |
+| `nvim-neo-tree/neo-tree.nvim`   | Directory tree side bar, opened files side bar |
+| `hrsh7th/nvim-cmp`              | Autocomplete                                   |
+| `folke/persistence.nvim`        | Sessions persistence                           |
+| `nvim-lua/plenary.nvim`         | Async utils (required by other plugins)        |
+| `nvim-telescope/telescope.nvim` | Explorer utils (grep, find file)               |
+
+### Env variables
+
+Some configs can be set through overriding default env variable values.
+Nvim will try to load env variables for the session from `<CWD>/.nvim/.env`
+
+| Env variable               | Description                                                      |
+|----------------------------|------------------------------------------------------------------|
+| `NVIM_CLANGD_BUILD_DIR`    | A directory where clangd will search for `compile_commands.json` |
+| `NVIM_CLANGD_CPP_STANDARD` | Cpp standard for clandg                                          |
 
 ### How to use
 
@@ -23,16 +44,3 @@ root
 $ cd <repo_root>
 $ cp -r config/* ~/.config/nvim
 ```
-3. Copy project setup into your project directory
-```bash
-$ mkdir -p <your_project_root>/.nvim
-$ cp project_setup/<project_type>/setup.lua <your_project_root>/.nvim
-```
-4. Modify copied `setup.lua` to fit your needs
-5. Run nvim from your project root. The setup will be loaded automatically.
-A welcome floating window will be displayed on nvim open showing available custom key bindings
-
-### Available project setups
-
-* cpp
-
