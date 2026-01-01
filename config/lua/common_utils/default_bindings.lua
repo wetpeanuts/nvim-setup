@@ -19,6 +19,10 @@ function M.init()
   vim.keymap.set("n", "<leader>t", ":Neotree toggle source=filesystem<CR>", { noremap = true, silent = true })
   vim.keymap.set("n", "<leader>o", ":Neotree toggle source=buffers<CR>", { noremap = true, silent = true })
 
+  -- Faster exit Insert mode with jj and jk
+  vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true })
+  vim.keymap.set("i", "jk", "<Esc>", { noremap = true, silent = true })
+
   -- Window navigation with <leader>w[direction]
   vim.keymap.set('n', '<leader>wj', '<C-w>j', { noremap = true, silent = true })
   vim.keymap.set('n', '<leader>wk', '<C-w>k', { noremap = true, silent = true })
