@@ -26,6 +26,12 @@ function M.init()
   vim.keymap.set('n', '<leader>wl', '<C-w>l', { noremap = true, silent = true })
   vim.keymap.set('n', '<leader>ww', '<C-w><C-w>', { noremap = true, silent = true })
 
+  vim.keymap.set('n', '<A-j>', '<C-w>j', { noremap = true, silent = true })
+  vim.keymap.set('n', '<A-k>', '<C-w>k', { noremap = true, silent = true })
+  vim.keymap.set('n', '<A-h>', '<C-w>h', { noremap = true, silent = true })
+  vim.keymap.set('n', '<A-l>', '<C-w>l', { noremap = true, silent = true })
+
+
   -- Window splits with <leader>s[direction]
   vim.keymap.set('n', '<leader>sh', '<C-w>s', { noremap = true, silent = true }) -- horizontal split
   vim.keymap.set('n', '<leader>sv', '<C-w>v', { noremap = true, silent = true }) -- vertical split
