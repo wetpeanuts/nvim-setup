@@ -1,5 +1,18 @@
 local M = {}
 
+local telescope = require('telescope.builtin')
+
+local function grep_word_and_store()
+  local word = vim.fn.expand('<cword>')
+  _G.grep_word_buf = word
+  telescope.grep_string({ search = word })
+end
+
+local function live_grep()
+  _G.grep_word_buf = nil
+  telescope.live_grep()
+end
+
 function M.init()
   -- Hotkeys
   -- Directory tree view
@@ -44,13 +57,35 @@ function M.init()
   vim.keymap.set("v", "<C-j>", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move block down" })
   vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move block up" })
 
-  vim.keymap.set('n', '<leader>fg', ":Telescope live_grep<CR>", { desc = 'Live Grep' })
-  vim.keymap.set('n', '<leader>fw', ":Telescope grep_string<CR>", { desc = 'Grep Word' })
+  vim.keymap.set('n', '<leader>fg', live_grep, { desc = 'Live Grep' })
+  vim.keymap.set('n', '<leader>fw', grep_word_and_store, { desc = 'Grep Word' })
   vim.keymap.set('n', '<leader>ff', ':Telescope find_files<CR>', { desc = 'Find Files' })
-  -- vim.keymap.set('n', '<leader>rr', function()
-  --   local new_str = vim.fn.input('Replace with: ')
-  --   vim.cmd('cfdo %s/\\%V/' .. vim.fn.escape(new_str, '/') .. '/g | update')
-  -- end, { desc = 'Replace in Quickfix' })
+
+  vim.keymap.set('n', '<leader>rr', function()
+    local old_str = vim.fn.input('Find: ')
+    local new_str = vim.fn.input('Replace ' .. old_str .. ' with: ')
+    if #new_str == 0 then
+      print("Replace cancelled")
+      return
+    end
+    vim.cmd('cfdo %s/' .. vim.fn.escape(old_str, '/') .. '/' .. vim.fn.escape(new_str, '/')
+      .. '/g | update')
+  end, { desc = 'Replace in Quickfix' })
+
+  vim.keymap.set('n', '<leader>rt', function()
+    if not _G.qf_search_term or _G.qf_search_term == "" then
+      print("No search term found")
+      return
+    end
+    local new_str = vim.fn.input('Replace ' .. _G.qf_search_term .. ' with: ')
+    if #new_str == 0 then
+      print("Replace cancelled")
+      return
+    end
+    vim.cmd('cfdo %s/' .. vim.fn.escape(_G.qf_search_term, '/') .. '/' .. vim.fn.escape(new_str, '/')
+      .. '/g | update')
+    _G.qf_search_term = nil  -- Clear after use
+  end, { desc = 'Replace Telescope grep in Quickfix' })
 
   vim.keymap.set('n', '<leader>ch', ':nohl<CR>', { silent = true, desc = 'Clear search highlights' })
 end

@@ -8,6 +8,7 @@ return {
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")
+    local action_state = require("telescope.actions.state")
 
     telescope.setup({
       defaults = {
@@ -17,7 +18,22 @@ return {
           i = {
             ["<C-k>"] = actions.move_selection_previous,
             ["<C-j>"] = actions.move_selection_next,
-            ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+            ["<C-q>"] = function(prompt_bufnr)
+              local picker = action_state.get_current_picker(prompt_bufnr)
+              local prompt = nil
+              if _G.grep_word_buf then
+                prompt = _G.grep_word_buf
+              else
+                if picker._get_prompt then
+                  prompt = picker:_get_prompt()
+                end
+              end
+              if prompt then
+                _G.qf_search_term = prompt
+                actions.send_to_qflist(prompt_bufnr)
+                actions.open_qflist()
+              end
+            end
           },
         },
       },

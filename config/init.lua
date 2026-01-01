@@ -29,8 +29,6 @@ vim.o.completeopt = "menu,menuone,noselect"
 vim.opt.shortmess:append("I")     -- Disable the intro message
 vim.opt.clipboard = "unnamedplus" -- Use system clipboard for all yank/paste/change
 
--- vim.opt.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,terminal"
-
 -- Initialize lazy.nvim plugin manager with plugins
 require("lazy").setup("plugins")
 
