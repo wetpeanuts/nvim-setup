@@ -30,11 +30,10 @@ Nvim will try to load env variables for the session from `<CWD>/.nvim/.env`
 | `NVIM_CLANGD_BUILD_DIR`    | `build`       | A directory where clangd will search for `compile_commands.json` |
 | `NVIM_CLANGD_CPP_STANDARD` | `-std=c++23`  | Cpp standard for clandg                                          |
 
-### How to use
+### Use guide
 
-1. Clone repo
-2. Copy `config` content into `~/.config/nvim`
 ```bash
-$ cd <repo_root>
-$ cp -r config/* ~/.config/nvim
+$ git clone <repo>
+$ cd ~/.config
+$ ln -s <repo_root>/config nvim  # Create a sym link to config
 ```
