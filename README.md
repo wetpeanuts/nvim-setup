@@ -5,13 +5,14 @@
 | Plugin                          | Description                                    |
 |---------------------------------|------------------------------------------------|
 | `goolord/alpha-nvim`            | Welcome dashboard                              |
-| `catppuccin/nvim`               | Color scheme                                   |
+| `catppuccin/nvim`               | Color scheme (Disabled)                        |
 | `nvim-lualine/lualine.nvim`     | Status bar                                     |
 | `nvim-neo-tree/neo-tree.nvim`   | Directory tree side bar, opened files side bar |
 | `hrsh7th/nvim-cmp`              | Autocomplete                                   |
 | `folke/persistence.nvim`        | Sessions persistence                           |
 | `nvim-lua/plenary.nvim`         | Async utils (required by other plugins)        |
 | `nvim-telescope/telescope.nvim` | Explorer utils (grep, find file)               |
+| `folke/tokyonight.nvim`         | Color scheme (Enabled)                         |
 
 ### LSP support
 

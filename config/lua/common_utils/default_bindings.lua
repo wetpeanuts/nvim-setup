@@ -18,6 +18,10 @@ function M.init()
   -- Directory tree view
   vim.keymap.set("n", "<leader>t", ":Neotree toggle source=filesystem<CR>", { noremap = true, silent = true })
   vim.keymap.set("n", "<leader>o", ":Neotree toggle source=buffers<CR>", { noremap = true, silent = true })
+  vim.keymap.set("n", "<leader>l", ":Neotree reveal<CR>", {
+    desc = "Reveal current file in Neo-tree",
+    silent = true,
+  })
 
   -- Faster exit Insert mode with jj and jk
   vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true })
@@ -98,6 +102,15 @@ function M.init()
   end, { desc = 'Replace Telescope grep in Quickfix' })
 
   vim.keymap.set('n', '<leader>ch', ':nohl<CR>', { silent = true, desc = 'Clear search highlights' })
+
+  vim.keymap.set("n", "<leader>cp", function()
+    local path = vim.fn.expand("%:.")
+    vim.fn.setreg("+", path) -- system clipboard
+    print("Copied: " .. path)
+  end, {
+    desc = "Copy relative path",
+  })
+
 end
 
 return M
