@@ -1,4 +1,4 @@
-local build_dir = os.getenv("NVIM_CLANGD_BUILD_DIR") or "build"
+local build_dir = os.getenv("NVIM_CLANGD_BUILD_DIR") or vim.fn.getcwd() .. "/build"
 local cpp_standard = os.getenv("NVIM_CLANGD_CPP_STANDARD") or "-std=c++23"
 
 return {
