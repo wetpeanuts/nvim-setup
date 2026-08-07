@@ -13,6 +13,7 @@
 | `nvim-lua/plenary.nvim`         | Async utils (required by other plugins)        |
 | `nvim-telescope/telescope.nvim` | Explorer utils (grep, find file)               |
 | `folke/tokyonight.nvim`         | Color scheme (Enabled)                         |
+| `nvim-treesitter/nvim-treesitter` | Syntax tree parser                           |
 
 ### LSP support
 
