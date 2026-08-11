@@ -14,6 +14,7 @@
 | `nvim-telescope/telescope.nvim` | Explorer utils (grep, find file)               |
 | `folke/tokyonight.nvim`         | Color scheme (Enabled)                         |
 | `nvim-treesitter/nvim-treesitter` | Syntax tree parser                           |
+| `nickjvandyke/opencode.nvim`     | OpenCode AI assistant integration            |
 
 ### LSP support
 
