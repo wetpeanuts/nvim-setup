@@ -15,11 +15,24 @@ end
 
 function M.init()
   -- Hotkeys
-  -- Directory tree view
-  vim.keymap.set("n", "<leader>t", ":Neotree toggle source=filesystem<CR>", { noremap = true, silent = true })
-  vim.keymap.set("n", "<leader>o", ":Neotree toggle source=buffers<CR>", { noremap = true, silent = true })
-  vim.keymap.set("n", "<leader>l", ":Neotree reveal<CR>", {
-    desc = "Reveal current file in Neo-tree",
+  -- Neo-tree shortcuts
+  vim.keymap.set("n", "<leader>tt", ":Neotree toggle source=filesystem<CR>", {
+    desc = "Open Neo-tree filesystem pane",
+    noremap = true,
+    silent = true
+  })
+  vim.keymap.set("n", "<leader>tb", ":Neotree toggle source=buffers<CR>", {
+    desc = "Open Neo-tree open buffers pane",
+    noremap = true,
+    silent = true
+  })
+  vim.keymap.set("n", "<leader>tg", ":Neotree toggle source=git_status<CR>", {
+    desc = "Open Neo-tree open buffers pane",
+    noremap = true,
+    silent = true
+  })
+  vim.keymap.set("n", "<leader>tr", ":Neotree reveal<CR>", {
+    desc = "Reveal current file in Neo-tree filesystem",
     silent = true,
   })
 
