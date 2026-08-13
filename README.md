@@ -1,4 +1,8 @@
-# My custom nvim setup
+# My Dev Setup
+
+Various configs I personally use in my dev environments.
+
+## Nvim
 
 ### Enabled plugins
 
@@ -31,12 +35,28 @@ Nvim will try to load env variables for the session from `<CWD>/.nvim/.env`
 | Env variable               | Default Value | Description                                                      |
 |----------------------------|---------------|------------------------------------------------------------------|
 | `NVIM_CLANGD_BUILD_DIR`    | `build`       | A directory where clangd will search for `compile_commands.json` |
-| `NVIM_CLANGD_CPP_STANDARD` | `-std=c++23`  | Cpp standard for clandg                                          |
+| `NVIM_CLANGD_CPP_STANDARD` | `-std=c++23`  | Cpp standard for clangd                                          |
 
 ### Use guide
 
 ```bash
 $ git clone <repo>
 $ cd ~/.config
-$ ln -s <repo_root>/config nvim  # Create a sym link to config
+$ ln -s <repo_root>/nvim nvim  # Create a sym link to config
 ```
+
+## Opencode
+
+### General config
+
+General example `opencode.json` config with default permissions.
+
+### Themes
+
+Custom definition for `tokyonight-moon` color scheme.
+`tui.json` config with `tokyonight-moon` as default color scheme.
+
+### Use guide
+
+Copy necessary configs into `~/.config/opencode`.
+Note that some configs might require manual update based on environment (e.g. providers).
