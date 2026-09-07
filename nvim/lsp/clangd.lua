@@ -3,8 +3,8 @@ local cpp_standard = os.getenv("NVIM_CLANGD_CPP_STANDARD") or "-std=c++23"
 
 return {
   cmd = {
-    -- "clangd",
-    "/opt/homebrew/opt/llvm/bin/clangd",
+    "clangd",
+    -- "/opt/homebrew/opt/llvm/bin/clangd",
     "--compile-commands-dir=" .. build_dir,
     "--background-index",
     "--clang-tidy",
