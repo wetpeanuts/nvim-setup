@@ -26,6 +26,11 @@ Various configs I personally use in my dev environments.
 2. cmake
 3. lua
 4. rust
+5. c3
+
+**Notes:**
+
+C3 LSP is built from source: https://github.com/tonis2/lsp.git. Built binary should be placed under $PATH and aliased as `c3-lsp`.
 
 ### Env variables
 

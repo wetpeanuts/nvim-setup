@@ -14,6 +14,7 @@ return {
         "python",
         "go",
         "bash",
+        "c3",
       }
 
       require("nvim-treesitter").install(languages)
