@@ -13,6 +13,28 @@ local function live_grep()
   telescope.live_grep()
 end
 
+local function grep_selection()
+  local old_reg = vim.fn.getreg('"')
+  local old_regtype = vim.fn.getregtype('"')
+
+  vim.cmd('normal! y')
+
+  local selection = vim.fn.getreg('"')
+
+  -- Restore previous yank
+  vim.fn.setreg('"', old_reg, old_regtype)
+
+  -- Remove trailing newline from linewise selections
+  selection = selection:gsub('\n$', '')
+
+  _G.grep_word_buf = selection
+
+  telescope.grep_string({
+    search = selection,
+    use_regex = false,
+  })
+end
+
 function M.init()
   -- Hotkeys
   -- Neo-tree shortcuts
@@ -89,6 +111,7 @@ function M.init()
   vim.keymap.set('n', '<leader>fg', live_grep, { desc = 'Live Grep' })
   vim.keymap.set('n', '<leader>fw', grep_word_and_store, { desc = 'Grep Word' })
   vim.keymap.set('n', '<leader>ff', ':Telescope find_files<CR>', { desc = 'Find Files' })
+  vim.keymap.set('v', '<leader>fs', grep_selection, { desc = 'Grep Selection', })
 
   vim.keymap.set('n', '<leader>rr', function()
     local old_str = vim.fn.input('Find: ')
@@ -124,6 +147,10 @@ function M.init()
     print("Copied: " .. path)
   end, {
     desc = "Copy relative path",
+  })
+
+  vim.keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", {
+    desc = 'Git branches explorer',
   })
 
 end
