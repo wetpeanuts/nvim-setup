@@ -65,3 +65,18 @@ Custom definition for `tokyonight-moon` color scheme.
 
 Copy necessary configs into `~/.config/opencode`.
 Note that some configs might require manual update based on environment (e.g. providers).
+
+## tmux
+
+### Use guide
+```bash
+$ cd ~ && ln -s <repo_root>/tmux/tmux.conf .tmux.conf
+```
+
+There is also a convenience script `tmux/default_session.sh` to init default tmux session
+or attach to existing one. The script creates a session named after CWD, with 3 default panes:
+
+- nvim
+- opencode
+- bash
+
